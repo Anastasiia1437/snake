@@ -6,6 +6,22 @@ food = vector(0, 0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
 
+def restart():
+    "Restart the game."
+    penup()
+    goto(0, 0)
+    hideturtle()
+    global snake, food, aim
+    snake = [vector(10, 0)]
+    food = vector(0, 0)
+    aim = vector(0, -10)
+    clear()
+    move()
+    
+
+onkey(restart, 'r')  # Press 'r' to restart the game
+onkey(restart, 'R') # Press 'r' to restart the game
+
 def change(x, y):
     "Change snake direction."
     aim.x = x
@@ -21,7 +37,16 @@ def move():
     head.move(aim)
 
     if not inside(head) or head in snake:
-        square(head.x, head.y, 9, 'red')
+        square(head.x, head.y, 9, 'red' )
+        penup()
+        goto(0, 40)
+        color('yellow')
+        write("GAME OVER!", align="center", font=("Arial", 16, "bold"))
+        pendown()
+        penup()
+        goto(0, 0)
+        write("PRESS 'R' TO RESTART", align="center", font=("Arial", 16, "bold"))
+        pendown()
         update()
         return
 
@@ -37,11 +62,16 @@ def move():
     clear()
 
     for body in snake:
-        square(body.x, body.y, 9, 'black')
+        square(body.x, body.y, 9, 'white')
 
-    square(food.x, food.y, 9, 'green')
+    square(food.x, food.y, 9, 'magenta')
     update()
     ontimer(move, 100)
+    
+setup(420, 420, 370, 0)
+bgcolor('light pink')  # Set the background color to light pink
+hideturtle()
+tracer(False)
 
 setup(420, 420, 370, 0)
 hideturtle()
